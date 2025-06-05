@@ -32,6 +32,14 @@ This project simulates a 4-wheeled rover navigating over Mars-like terrain using
 - Download and install MuJoCo from [https://mujoco.org/](https://mujoco.org/)
 - Set environment variable `MUJOCO_PY_MUJOCO_PATH` or use pip-installed version
 
+  ## 🎮 Controls
+
+- `↑` / `↓`: Increase/decrease speed  
+- `←` / `→`: Steer left/right  
+- `Space`: Stop movement  
+- GUI Sliders: Fine-tune speed and steering
+
+
 ### 2. Install Python Requirements
 
 ```bash
