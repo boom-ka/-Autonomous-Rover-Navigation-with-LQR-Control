@@ -1,0 +1,101 @@
+<mujoco model="rover">
+  <compiler angle="radian"/>
+  
+  <asset>
+    <texture type="2d" name="rover_body_texture" builtin="flat" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3" width="300" height="300"/>
+    <material name="rover_body_material" texture="rover_body_texture" texuniform="true" reflectance="0.1" rgba="0.7 0.7 0.7 1"/>
+    <material name="suspension_material" rgba="0.4 0.4 0.4 1"/>
+    <material name="solar_panel_material" rgba="0.1 0.1 0.5 1" reflectance="0.7"/>
+    <material name="antenna_material" rgba="0.8 0.8 0.8 1"/>
+    <material name="camera_material" rgba="0.1 0.1 0.1 1"/>
+  </asset>
+  
+  <worldbody>
+    <body name="robot_body">
+      <joint name="robot_body_joint" type="free"/>
+      
+      <!-- Main rover body -->
+      <geom name="body_main" size="0.12 0.15 0.03" pos="0 0 0.075" type="box" material="rover_body_material"/>
+      
+      <!-- Rover deck/solar panel -->
+      <geom name="solar_panel" size="0.1 0.12 0.005" pos="0 0 0.11" type="box" material="solar_panel_material"/>
+      
+      <!-- Equipment/sensor mast -->
+      <geom name="mast_base" size="0.02 0.02 0.04" pos="0.06 0 0.125" type="box" material="rover_body_material"/>
+      <geom name="mast" size="0.008 0.06" pos="0.06 0 0.225" type="cylinder" material="antenna_material"/>
+      
+      <!-- Camera -->
+      <geom name="camera" size="0.02 0.02 0.02" pos="0.06 0 0.285" type="box" material="camera_material"/>
+      
+      <!-- Antenna -->
+      <geom name="antenna" size="0.003 0.04" pos="-0.06 0 0.16" type="cylinder" material="antenna_material"/>
+      <geom name="antenna_dish" size="0.02" pos="-0.06 0 0.2" type="sphere" material="antenna_material"/>
+      
+      <!-- Inertial properties -->
+      <inertial pos="0 0 0.08" mass="2.0" diaginertia="0.015 0.02 0.025"/>
+
+      <!-- Front left wheel with suspension -->
+      <body name="fl_suspension" pos="-0.12 0.14 0.045">
+        <joint name="fl_suspension_joint" type="slide" pos="0 0 0" axis="0 0 1" range="-0.02 0.02" damping="10"/>
+        <geom name="fl_suspension_spring" size="0.01 0.02" type="cylinder" material="suspension_material"/>
+        <body name="fl_wheel" pos="0 0 -0.02">
+          <inertial pos="0 0 0" mass="0.08" diaginertia="5.0e-05 3.0e-05 3.0e-05"/>
+          <joint name="fl_wheel_joint" type="hinge" pos="0 0 0" axis="0 1 0" actuatorfrcrange="-5 5" damping="0.1"/>
+          <geom name="fl_wheel_geom" size="0.04 0.018" quat="0.707107 0.707107 0 0" type="cylinder" material="wheel_material"/>
+          <!-- Wheel treads for more detail -->
+          <geom name="fl_wheel_tread1" size="0.042 0.002" quat="0.707107 0.707107 0 0" pos="0 0 0" type="cylinder" rgba="0.15 0.15 0.15 1"/>
+          <geom name="fl_wheel_tread2" size="0.042 0.002" quat="0.707107 0 0.707107 0" pos="0 0 0" type="cylinder" rgba="0.15 0.15 0.15 1"/>
+        </body>
+      </body>
+      
+      <!-- Front right wheel with suspension -->
+      <body name="fr_suspension" pos="0.12 0.14 0.045">
+        <joint name="fr_suspension_joint" type="slide" pos="0 0 0" axis="0 0 1" range="-0.02 0.02" damping="10"/>
+        <geom name="fr_suspension_spring" size="0.01 0.02" type="cylinder" material="suspension_material"/>
+        <body name="fr_wheel" pos="0 0 -0.02">
+          <inertial pos="0 0 0" mass="0.08" diaginertia="5.0e-05 3.0e-05 3.0e-05"/>
+          <joint name="fr_wheel_joint" type="hinge" pos="0 0 0" axis="0 1 0" actuatorfrcrange="-5 5" damping="0.1"/>
+          <geom name="fr_wheel_geom" size="0.04 0.018" quat="0.707107 0.707107 0 0" type="cylinder" material="wheel_material"/>
+          <!-- Wheel treads for more detail -->
+          <geom name="fr_wheel_tread1" size="0.042 0.002" quat="0.707107 0.707107 0 0" pos="0 0 0" type="cylinder" rgba="0.15 0.15 0.15 1"/>
+          <geom name="fr_wheel_tread2" size="0.042 0.002" quat="0.707107 0 0.707107 0" pos="0 0 0" type="cylinder" rgba="0.15 0.15 0.15 1"/>
+        </body>
+      </body>
+      
+      <!-- Rear left wheel with suspension -->
+      <body name="rl_suspension" pos="-0.12 -0.14 0.045">
+        <joint name="rl_suspension_joint" type="slide" pos="0 0 0" axis="0 0 1" range="-0.02 0.02" damping="10"/>
+        <geom name="rl_suspension_spring" size="0.01 0.02" type="cylinder" material="suspension_material"/>
+        <body name="rl_wheel" pos="0 0 -0.02">
+          <inertial pos="0 0 0" mass="0.08" diaginertia="5.0e-05 3.0e-05 3.0e-05"/>
+          <joint name="rl_wheel_joint" type="hinge" pos="0 0 0" axis="0 1 0" actuatorfrcrange="-5 5" damping="0.1"/>
+          <geom name="rl_wheel_geom" size="0.04 0.018" quat="0.707107 0.707107 0 0" type="cylinder" material="wheel_material"/>
+          <!-- Wheel treads for more detail -->
+          <geom name="rl_wheel_tread1" size="0.042 0.002" quat="0.707107 0.707107 0 0" pos="0 0 0" type="cylinder" rgba="0.15 0.15 0.15 1"/>
+          <geom name="rl_wheel_tread2" size="0.042 0.002" quat="0.707107 0 0.707107 0" pos="0 0 0" type="cylinder" rgba="0.15 0.15 0.15 1"/>
+        </body>
+      </body>
+      
+      <!-- Rear right wheel with suspension -->
+      <body name="rr_suspension" pos="0.12 -0.14 0.045">
+        <joint name="rr_suspension_joint" type="slide" pos="0 0 0" axis="0 0 1" range="-0.02 0.02" damping="10"/>
+        <geom name="rr_suspension_spring" size="0.01 0.02" type="cylinder" material="suspension_material"/>
+        <body name="rr_wheel" pos="0 0 -0.02">
+          <inertial pos="0 0 0" mass="0.08" diaginertia="5.0e-05 3.0e-05 3.0e-05"/>
+          <joint name="rr_wheel_joint" type="hinge" pos="0 0 0" axis="0 1 0" actuatorfrcrange="-5 5" damping="0.1"/>
+          <geom name="rr_wheel_geom" size="0.04 0.018" quat="0.707107 0.707107 0 0" type="cylinder" material="wheel_material"/>
+          <!-- Wheel treads for more detail -->
+          <geom name="rr_wheel_tread1" size="0.042 0.002" quat="0.707107 0.707107 0 0" pos="0 0 0" type="cylinder" rgba="0.15 0.15 0.15 1"/>
+          <geom name="rr_wheel_tread2" size="0.042 0.002" quat="0.707107 0 0.707107 0" pos="0 0 0" type="cylinder" rgba="0.15 0.15 0.15 1"/>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <velocity name="motor_fl_wheel" joint="fl_wheel_joint" gear="1" kv="0.9"/>
+    <velocity name="motor_fr_wheel" joint="fr_wheel_joint" gear="1" kv="0.9"/>
+    <velocity name="motor_rl_wheel" joint="rl_wheel_joint" gear="1" kv="0.9"/>
+    <velocity name="motor_rr_wheel" joint="rr_wheel_joint" gear="1" kv="0.9"/>
+  </actuator>
+</mujoco>
